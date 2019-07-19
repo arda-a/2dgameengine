@@ -10,8 +10,8 @@ bool Game::IsRunning() const { return this->m_isRunning; }
 
 float projectilePosX = 0.0f;
 float projectilePosY = 0.0f;
-float projectileVelX = 50.0f;
-float projectileVelY = 50.0f;
+float projectileVelX = 0.5f;
+float projectileVelY = 0.5f;
 
 void Game::Initialize(int width, int height) {
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -54,4 +54,32 @@ void Game::ProcessInput() {
   default:
     break;
   }
+}
+
+void Game::Update() {
+  projectilePosX += projectileVelX;
+  projectilePosY += projectileVelY;
+}
+
+void Game::Render() {
+  SDL_SetRenderDrawColor(m_renderer, 21, 21, 21, 255);
+  SDL_RenderClear(m_renderer);
+
+  SDL_Rect projectile {
+    (int)projectilePosX,
+    (int)projectilePosY,
+    10,
+    10
+  };
+
+  SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+  SDL_RenderFillRect(m_renderer, &projectile);
+
+  SDL_RenderPresent(m_renderer);
+}
+
+void Game::Destroy(){
+  SDL_DestroyRenderer(m_renderer);
+  SDL_DestroyWindow(m_window);
+  SDL_Quit();
 }
