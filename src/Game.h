@@ -5,12 +5,13 @@
 #include <SDL2/SDL_ttf.h>
 
 class Game {
-private:
+ private:
   bool m_isRunning;
   SDL_Window *m_window;
   SDL_Renderer *m_renderer;
+  int m_ticksLastFrame;
 
-public:
+ public:
   Game();
   ~Game();
   bool IsRunning() const;
