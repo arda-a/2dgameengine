@@ -8,8 +8,6 @@ class Game {
  private:
   bool m_isRunning;
   SDL_Window *m_window;
-  SDL_Renderer *m_renderer;
-  int m_ticksLastFrame;
 
  public:
   Game();
@@ -20,4 +18,7 @@ class Game {
   void Update();
   void Render();
   void Destroy();
+  void LoadLevel(int levelNumber);
+  static SDL_Renderer *Renderer;
+  int TicksLastFrame;
 };
