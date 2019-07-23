@@ -1,6 +1,6 @@
 #pragma once
 
-#include <../Game.h>
+#include "../Game.h"
 #include <SDL2/SDL.h>
 #include "../../lib/glm/glm.hpp"
 #include "../EntityManager.h"
@@ -24,8 +24,7 @@ class TransformComponent : public Component {
 
   void Initialize() override {}
 
-  void Update(float deltaTime) {
-    // TODO:
+  void Update(float deltaTime) override {
     Position.x += Velocity.x * deltaTime;
     Position.y += Velocity.y * deltaTime;
   }
