@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <string>
 #include <vector>
 #include "./EntityManager.h"
@@ -13,6 +14,7 @@ class Entity {
   EntityManager& m_manager;
   bool m_isActive;
   std::vector<Component*> m_components;
+  std::map<const std::type_info*, Component*> m_componentTypeMap;
 
  public:
   std::string Name;
@@ -22,13 +24,21 @@ class Entity {
   void Render();
   void Destroy();
   bool IsActive() const;
+  std::vector<Component*> GetComponents() const { return m_components; }
 
   template <typename T, typename... TArgs>
-  T& AddComponent(TArgs&&... args){
+  T& AddComponent(TArgs&&... args) {
     T* newComponent(new T(std::forward<TArgs>(args)...));
+    newComponent->componentName = typeid(T).name();
     newComponent->owner = this;
     m_components.emplace_back(newComponent);
+    m_componentTypeMap[&typeid(*newComponent)] = newComponent;
     newComponent->Initialize();
     return *newComponent;
+  }
+
+  template <typename T>
+  T* GetComponent() {
+    return static_cast<T*>(m_componentTypeMap[&typeid(T)]);
   }
 };

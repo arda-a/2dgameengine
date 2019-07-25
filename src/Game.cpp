@@ -48,7 +48,18 @@ void Game::Initialize(int width, int height) {
 
 void Game::LoadLevel(int levelNumber) {
   Entity& newEntity(manager.AddEntity("projectile"));
+  Entity& newEntity2(manager.AddEntity("projectile2"));
   newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+  newEntity2.AddComponent<TransformComponent>(200, 0, -20, 20, 16, 16, 1);
+
+  std::vector<Entity*> entities = manager.GetEntities();
+  for (size_t i = 0; i < entities.size(); i++) {
+    std::cout << "Entity name " << i + 1 << ": " << entities[i]->Name << std::endl;
+    for(Component* component : entities[i]->GetComponents()){
+      std::cout << "Component name: " << component->componentName << std::endl;
+    }
+    std::cout << std::endl;
+  }
 }
 
 void Game::ProcessInput() {
