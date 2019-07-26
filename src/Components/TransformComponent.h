@@ -30,8 +30,5 @@ class TransformComponent : public Component {
   }
 
   void Render() override {
-    SDL_Rect transformrRect = {(int)Position.x, (int)Position.y, Width, Height};
-    SDL_SetRenderDrawColor(Game::Renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(Game::Renderer, &transformrRect);
   }
 };

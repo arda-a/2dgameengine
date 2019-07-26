@@ -1,11 +1,14 @@
 #include "./Game.h"
 #include <iostream>
 #include "../lib/glm/glm.hpp"
+#include "./AssetManager.h"
+#include "./Components/SpriteComponent.h"
 #include "./Components/TransformComponent.h"
 #include "./Constants.h"
 #include "EntityManager.h"
 
 EntityManager manager;
+AssetManager* Game::assetManager = new AssetManager(&manager);
 SDL_Renderer* Game::Renderer;
 
 Game::Game() { this->m_isRunning = false; }
@@ -47,15 +50,19 @@ void Game::Initialize(int width, int height) {
 }
 
 void Game::LoadLevel(int levelNumber) {
-  Entity& newEntity(manager.AddEntity("projectile"));
-  Entity& newEntity2(manager.AddEntity("projectile2"));
+  /* Start including new assets to the assetmanager list */
+  std::string textureFilePath = "./assets/images/tank-big-right.png";
+  assetManager->AddTexture("tank-image", textureFilePath.c_str());
+
+  Entity& newEntity(manager.AddEntity("tank"));
   newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
-  newEntity2.AddComponent<TransformComponent>(200, 0, -20, 20, 16, 16, 1);
+  newEntity.AddComponent<SpriteComponent>("tank-image");
 
   std::vector<Entity*> entities = manager.GetEntities();
   for (size_t i = 0; i < entities.size(); i++) {
-    std::cout << "Entity name " << i + 1 << ": " << entities[i]->Name << std::endl;
-    for(Component* component : entities[i]->GetComponents()){
+    std::cout << "Entity name " << i + 1 << ": " << entities[i]->Name
+              << std::endl;
+    for (Component* component : entities[i]->GetComponents()) {
       std::cout << "Component name: " << component->componentName << std::endl;
     }
     std::cout << std::endl;
