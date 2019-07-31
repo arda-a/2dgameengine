@@ -51,8 +51,8 @@ void Game::Initialize(int width, int height) {
 
 void Game::LoadLevel(int levelNumber) {
   /* Start including new assets to the assetmanager list */
-  std::string textureFilePath = "./assets/images/tank-big-right.png";
-  assetManager->AddTexture("tank-image", textureFilePath.c_str());
+  assetManager->AddTexture("tank-image", std::string("./assets/images/tank-big-right.png").c_str());
+  assetManager->AddTexture("chopper-image", std::string("./assets/images/chopper-spritesheet.png").c_str());
 
   Entity& newEntity(manager.AddEntity("tank"));
   newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);

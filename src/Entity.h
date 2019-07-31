@@ -25,6 +25,12 @@ class Entity {
   void Destroy();
   bool IsActive() const;
   std::vector<Component*> GetComponents() const { return m_components; }
+  void ListAllComponents() const;
+  
+  template <typename T>
+  bool HasComponent() const {
+    return m_component+TypeMap[&typeid(T)] != nullptr;
+  }
 
   template <typename T, typename... TArgs>
   T& AddComponent(TArgs&&... args) {
