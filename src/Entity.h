@@ -28,8 +28,9 @@ class Entity {
   void ListAllComponents() const;
   
   template <typename T>
-  bool HasComponent() const {
-    return m_component+TypeMap[&typeid(T)] != nullptr;
+  bool HasComponent() {
+    //return false;
+    return m_componentTypeMap[&typeid(T)] != nullptr;
   }
 
   template <typename T, typename... TArgs>
