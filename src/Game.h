@@ -24,4 +24,5 @@ class Game {
   int TicksLastFrame;
   static SDL_Renderer *Renderer;
   static AssetManager *assetManager;
+  static SDL_Event Event;
 };

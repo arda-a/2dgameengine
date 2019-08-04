@@ -4,12 +4,14 @@
 #include "./AssetManager.h"
 #include "./Components/SpriteComponent.h"
 #include "./Components/TransformComponent.h"
+#include "./Components/KeyboardControlComponent.h"
 #include "./Constants.h"
 #include "EntityManager.h"
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
 SDL_Renderer* Game::Renderer;
+SDL_Event Game::Event;
 
 Game::Game() { this->m_isRunning = false; }
 
@@ -56,6 +58,8 @@ void Game::LoadLevel(int levelNumber) {
   assetManager->AddTexture(
       "chopper-image",
       std::string("./assets/images/chopper-spritesheet.png").c_str());
+  assetManager->AddTexture("radar-image",
+                           std::string("./assets/images/radar.png").c_str());
 
   Entity& tankEntity(manager.AddEntity("tank"));
   tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
@@ -65,6 +69,12 @@ void Game::LoadLevel(int levelNumber) {
   chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
   chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true,
                                               false);
+  chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
+
+  Entity& radarEntity(manager.AddEntity("Radar"));
+  radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
+  radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false,
+                                              true);
 
   std::vector<Entity*> entities = manager.GetEntities();
   for (size_t i = 0; i < entities.size(); i++) {
@@ -78,15 +88,14 @@ void Game::LoadLevel(int levelNumber) {
 }
 
 void Game::ProcessInput() {
-  SDL_Event event;
-  SDL_PollEvent(&event);
-  switch (event.type) {
+  SDL_PollEvent(&Event);
+  switch (Event.type) {
     case SDL_QUIT: {
       m_isRunning = false;
       break;
     }
     case SDL_KEYDOWN: {
-      if (event.key.keysym.sym == SDLK_ESCAPE) {
+      if (Event.key.keysym.sym == SDLK_ESCAPE) {
         m_isRunning = false;
       }
     }
