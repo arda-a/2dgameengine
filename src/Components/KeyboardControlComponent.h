@@ -7,11 +7,11 @@
 
 class KeyboardControlComponent : public Component {
  public:
-  std::string upKey;
-  std::string downKey;
-  std::string rightKey;
-  std::string leftKey;
-  std::string shootKey;
+  std::string UpKey;
+  std::string DownKey;
+  std::string RightKey;
+  std::string LeftKey;
+  std::string ShootKey;
   TransformComponent *Transform;
   SpriteComponent *Sprite;
 
@@ -20,16 +20,16 @@ class KeyboardControlComponent : public Component {
   KeyboardControlComponent(std::string upkey, std::string rightkey,
                            std::string downkey, std::string leftkey,
                            std::string shootKey) {
-    this->upKey = GetSDLKeyStringCode(upkey);
-    this->rightKey = GetSDLKeyStringCode(rightKey);
-    this->downKey = GetSDLKeyStringCode(downKey);
-    this->leftKey = GetSDLKeyStringCode(leftKey);
-    this->shootKey = GetSDLKeyStringCode(shootKey);
+    this->UpKey = GetSDLKeyStringCode(upkey);
+    this->RightKey = GetSDLKeyStringCode(rightkey);
+    this->DownKey = GetSDLKeyStringCode(downkey);
+    this->LeftKey = GetSDLKeyStringCode(leftkey);
+    this->ShootKey = GetSDLKeyStringCode(shootKey);
   }
 
   std::string GetSDLKeyStringCode(std::string key) {
-    if (key.compare("up") == 0) return "1073741906";
     if (key.compare("down") == 0) return "1073741905";
+    if (key.compare("up") == 0) return "1073741906";
     if (key.compare("left") == 0) return "1073741904";
     if (key.compare("right") == 0) return "1073741903";
     if (key.compare("space") == 0) return "32";
@@ -43,29 +43,29 @@ class KeyboardControlComponent : public Component {
 
   void Update(float deltaTime) override {
     if (Game::Event.type == SDL_KEYDOWN) {
-      std::string keyCode = std::to_string(Game::Event.key.keysym.sym);
+      std::string keyCode =  std::to_string(Game::Event.key.keysym.sym);
 
-      if (keyCode.compare(upKey) == 0) {
+      if (keyCode.compare(UpKey) == 0) {
         Transform->Velocity.y = -10;
         Transform->Velocity.x = 0;
         Sprite->Play("UpAnimation");
       }
-      if (keyCode.compare(rightKey) == 0) {
+      else if (keyCode.compare(RightKey) == 0) {
         Transform->Velocity.y = 0;
         Transform->Velocity.x = 10;
         Sprite->Play("RightAnimation");
       }
-      if (keyCode.compare(downKey) == 0) {
+      else if (keyCode.compare(DownKey) == 0) {
         Transform->Velocity.y = 10;
         Transform->Velocity.x = 0;
         Sprite->Play("DownAnimation");
       }
-      if (keyCode.compare(leftKey) == 0) {
+      else if (keyCode.compare(LeftKey) == 0) {
         Transform->Velocity.y = 0;
         Transform->Velocity.x = -10;
         Sprite->Play("LeftAnimation");
       }
-      if (keyCode.compare(shootKey) == 0) {
+      else if (keyCode.compare(ShootKey) == 0) {
         // TODO
 
         // Shoot projectiles when 'shoot' key is pressed.
@@ -74,19 +74,19 @@ class KeyboardControlComponent : public Component {
 
     if (Game::Event.type == SDL_KEYUP) {
       std::string keyCode = std::to_string(Game::Event.key.keysym.sym);
-      if (keyCode.compare(upKey) == 0) {
+      if (keyCode.compare(UpKey) == 0) {
         Transform->Velocity.y = 0;
       }
-      if (keyCode.compare(rightKey) == 0) {
+      if (keyCode.compare(RightKey) == 0) {
         Transform->Velocity.x = 0;
       }
-      if (keyCode.compare(downKey) == 0) {
+      if (keyCode.compare(DownKey) == 0) {
         Transform->Velocity.y = 0;
       }
-      if (keyCode.compare(leftKey) == 0) {
+      if (keyCode.compare(LeftKey) == 0) {
         Transform->Velocity.x = 0;
       }
-      if (keyCode.compare(shootKey) == 0) {
+      if (keyCode.compare(ShootKey) == 0) {
         // TODO
       }
     }
