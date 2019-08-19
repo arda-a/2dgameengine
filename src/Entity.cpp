@@ -1,12 +1,13 @@
 #include "Entity.h"
+#include "./Constants.h"
 #include <iostream>
 
 Entity::Entity(EntityManager& manager) : m_manager(manager) {
   this->m_isActive = true;
 }
 
-Entity::Entity(EntityManager& manager, std::string name)
-    : m_manager(manager), Name(name) {
+Entity::Entity(EntityManager& manager, std::string name, LayerType layer)
+    : m_manager(manager), Name(name), Layer(layer) {
   this->m_isActive = true;
 }
 
