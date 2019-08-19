@@ -46,26 +46,26 @@ class KeyboardControlComponent : public Component {
       std::string keyCode =  std::to_string(Game::Event.key.keysym.sym);
 
       if (keyCode.compare(UpKey) == 0) {
-        Transform->Velocity.y = -10;
+        Transform->Velocity.y = -15;
         Transform->Velocity.x = 0;
         Sprite->Play("UpAnimation");
       }
-      else if (keyCode.compare(RightKey) == 0) {
+      if (keyCode.compare(RightKey) == 0) {
         Transform->Velocity.y = 0;
-        Transform->Velocity.x = 10;
+        Transform->Velocity.x = 15;
         Sprite->Play("RightAnimation");
       }
-      else if (keyCode.compare(DownKey) == 0) {
-        Transform->Velocity.y = 10;
+      if (keyCode.compare(DownKey) == 0) {
+        Transform->Velocity.y = 15;
         Transform->Velocity.x = 0;
         Sprite->Play("DownAnimation");
       }
-      else if (keyCode.compare(LeftKey) == 0) {
+      if (keyCode.compare(LeftKey) == 0) {
         Transform->Velocity.y = 0;
-        Transform->Velocity.x = -10;
+        Transform->Velocity.x = -15;
         Sprite->Play("LeftAnimation");
       }
-      else if (keyCode.compare(ShootKey) == 0) {
+      if (keyCode.compare(ShootKey) == 0) {
         // TODO
 
         // Shoot projectiles when 'shoot' key is pressed.
