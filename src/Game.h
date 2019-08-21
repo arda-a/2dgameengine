@@ -21,8 +21,10 @@ class Game {
   void Render();
   void Destroy();
   void LoadLevel(int levelNumber);
+  void HandleCameraMovement();
   int TicksLastFrame;
   static SDL_Renderer *Renderer;
   static AssetManager *assetManager;
   static SDL_Event Event;
+  static SDL_Rect Camera;
 };

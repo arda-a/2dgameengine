@@ -86,13 +86,16 @@ class SpriteComponent : public Component {
 
   void Update(float deltaTime) override {
     if (m_isAnimated) {
-      m_sourceRectangle.x = m_sourceRectangle.w *
-                            static_cast<int>((SDL_GetTicks() / m_animationSpeed) % m_numFrames);
+      m_sourceRectangle.x =
+          m_sourceRectangle.w *
+          static_cast<int>((SDL_GetTicks() / m_animationSpeed) % m_numFrames);
     }
     m_sourceRectangle.y = m_animationIndex * m_transform->Height;
 
-    m_destinationRectangle.x = static_cast<int>(m_transform->Position.x);
-    m_destinationRectangle.y = static_cast<int>(m_transform->Position.y);
+    m_destinationRectangle.x =
+        static_cast<int>(m_transform->Position.x) - (m_isFixed ? 0 : Game::Camera.x);
+    m_destinationRectangle.y =
+        static_cast<int>(m_transform->Position.y) - (m_isFixed ? 0 : Game::Camera.y);
     m_destinationRectangle.w = m_transform->Width;
     m_destinationRectangle.h = m_transform->Height;
   }

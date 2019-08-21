@@ -31,9 +31,10 @@ class TileComponent : public Component {
   }
 
   ~TileComponent() { SDL_DestroyTexture(Texture); }
+
   void Update(float deltaTime) override {
-      //TODO : Here is where we will take care of the tile positions
-      // based on the camera control that will keep moving around.
+    DestinationRectangle.x = Position.x - Game::Camera.x;
+    DestinationRectangle.y = Position.y - Game::Camera.y;
   }
 
   void Render() override {
