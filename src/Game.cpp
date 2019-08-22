@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../lib/glm/glm.hpp"
 #include "./AssetManager.h"
+#include "./Components/ColliderComponent.h"
 #include "./Components/KeyboardControlComponent.h"
 #include "./Components/SpriteComponent.h"
 #include "./Components/TransformComponent.h"
@@ -75,10 +76,12 @@ void Game::LoadLevel(int levelNumber) {
   player.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);
   player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left",
                                                 "space");
+  player.AddComponent<ColliderComponent>("player", 240, 106, 32, 32);
 
   Entity& tankEntity(manager.AddEntity("tank", ENEMY_LAYER));
   tankEntity.AddComponent<TransformComponent>(150, 495, 5, 0, 32, 32, 1);
   tankEntity.AddComponent<SpriteComponent>("tank-image");
+  tankEntity.AddComponent<ColliderComponent>("enemy", 150, 495, 32, 32);
 
   Entity& radarEntity(manager.AddEntity("Radar", UI_LAYER));
   radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
@@ -130,6 +133,7 @@ void Game::Update() {
   manager.Update(deltaTime);
 
   HandleCameraMovement();
+  CheckCollisions();
 }
 
 void Game::Render() {
@@ -157,6 +161,14 @@ void Game::HandleCameraMovement() {
   Camera.y = Camera.y < 0 ? 0 : Camera.y;
   Camera.x = Camera.x > Camera.w ? Camera.w : Camera.x;
   Camera.y = Camera.y > Camera.h ? Camera.h : Camera.y;
+}
+
+void Game::CheckCollisions() {
+  std::string collisionTagType = manager.CheckEntityCollisions(player);
+  if (collisionTagType.compare("enemy") == 0) {
+        // TODO : Do something when collision happens with an enemy.
+        m_isRunning = false;
+      }
 }
 
 void Game::Destroy() {

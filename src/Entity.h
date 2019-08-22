@@ -31,8 +31,7 @@ class Entity {
   
   template <typename T>
   bool HasComponent() {
-    //return false;
-    return m_componentTypeMap[&typeid(T)] != nullptr;
+    return m_componentTypeMap[&typeid(T)];
   }
 
   template <typename T, typename... TArgs>
