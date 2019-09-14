@@ -164,11 +164,23 @@ void Game::HandleCameraMovement() {
 }
 
 void Game::CheckCollisions() {
-  std::string collisionTagType = manager.CheckEntityCollisions(player);
-  if (collisionTagType.compare("enemy") == 0) {
-        // TODO : Do something when collision happens with an enemy.
-        m_isRunning = false;
-      }
+  CollisionType collisionType = manager.CheckCollisions();
+  if(collisionType == PLAYER_ENEMY_COLLISION){
+    ProcessGameOver();
+  }
+  if(collisionType == PLAYER_LEVEL_COMPLETE_COLLISION){
+    ProcessNextLevel(1);
+  }
+}
+
+void Game::ProcessNextLevel(int levelNumber){
+  std::cout << "Next Level" << std::endl;
+  m_isRunning = false;
+}
+
+void Game::ProcessGameOver(){
+  std::cout << "Game Over" << std::endl;
+  m_isRunning = false;
 }
 
 void Game::Destroy() {

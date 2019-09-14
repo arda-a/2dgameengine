@@ -23,6 +23,8 @@ class Game {
   void LoadLevel(int levelNumber);
   void HandleCameraMovement();
   void CheckCollisions();
+  void ProcessGameOver();
+  void ProcessNextLevel(int levelNumber);
   int TicksLastFrame;
   static SDL_Renderer *Renderer;
   static AssetManager *assetManager;
