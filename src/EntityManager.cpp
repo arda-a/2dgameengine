@@ -13,8 +13,13 @@ void EntityManager::ClearData() {
 bool EntityManager::HasNoEntities() { return m_entities.size() == 0; }
 
 void EntityManager::Update(float deltaTime) {
-  for (auto& entity : m_entities) {
-    entity->Update(deltaTime);
+  for (int i = 0; i < m_entities.size(); i++) {
+    m_entities[i]->Update(deltaTime);
+    
+    //Destroy inactive entity
+    if(!m_entities[i]->IsActive()){
+      m_entities.erase(m_entities.begin() + i);
+    }
   }
 }
 
