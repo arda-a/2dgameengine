@@ -1,1 +1,1 @@
-2D game engine with C++ SDL and Lua 
+2D game developed with C++, SDL and Lua from scratch without an engine.

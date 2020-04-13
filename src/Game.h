@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../lib/lua/sol.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -7,11 +8,11 @@
 class AssetManager;
 
 class Game {
- private:
+private:
   bool m_isRunning;
   SDL_Window *m_window;
 
- public:
+public:
   Game();
   ~Game();
   bool IsRunning() const;
