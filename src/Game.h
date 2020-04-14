@@ -26,7 +26,7 @@ public:
   void CheckCollisions();
   void ProcessGameOver();
   void ProcessNextLevel(int levelNumber);
-  int TicksLastFrame;
+  int TicksLastFrame = 0;
   static SDL_Renderer *Renderer;
   static AssetManager *assetManager;
   static SDL_Event Event;
