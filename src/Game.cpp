@@ -17,6 +17,7 @@ AssetManager *Game::assetManager = new AssetManager(&manager);
 SDL_Renderer *Game::Renderer;
 SDL_Event Game::Event;
 SDL_Rect Game::Camera = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+Entity *mainPlayer = NULL;
 Map *map;
 
 Game::Game() { this->m_isRunning = false; }
@@ -60,8 +61,6 @@ void Game::Initialize(int width, int height) {
   m_isRunning = true;
   return;
 }
-
-Entity &player(manager.AddEntity("chopper", PLAYER_LAYER));
 
 void Game::LoadLevel(int levelNumber) {
   sol::state lua;
@@ -172,17 +171,19 @@ void Game::Render() {
 }
 
 void Game::HandleCameraMovement() {
-  TransformComponent *mainPlayerTransform =
-      player.GetComponent<TransformComponent>();
+  if (mainPlayer) {
+    TransformComponent *mainPlayerTransform =
+        mainPlayer->GetComponent<TransformComponent>();
 
-  Camera.x = mainPlayerTransform->Position.x - (WINDOW_WIDTH / 2);
-  Camera.y = mainPlayerTransform->Position.y - (WINDOW_HEIGHT / 2);
+    Camera.x = mainPlayerTransform->Position.x - (WINDOW_WIDTH / 2);
+    Camera.y = mainPlayerTransform->Position.y - (WINDOW_HEIGHT / 2);
 
-  // Clamp the values horizontally and vertically
-  Camera.x = Camera.x < 0 ? 0 : Camera.x;
-  Camera.y = Camera.y < 0 ? 0 : Camera.y;
-  Camera.x = Camera.x > Camera.w ? Camera.w : Camera.x;
-  Camera.y = Camera.y > Camera.h ? Camera.h : Camera.y;
+    // Clamp the values horizontally and vertically
+    Camera.x = Camera.x < 0 ? 0 : Camera.x;
+    Camera.y = Camera.y < 0 ? 0 : Camera.y;
+    Camera.x = Camera.x > Camera.w ? Camera.w : Camera.x;
+    Camera.y = Camera.y > Camera.h ? Camera.h : Camera.y;
+  }
 }
 
 void Game::CheckCollisions() {
